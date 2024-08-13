@@ -16,7 +16,7 @@
 
 <p>&nbsp;</p>
 
-This template can be used to create Ortus based BoxLang Modules.  To use, just click the `Use this Template` button in the github repository: https://github.com/boxlang-modules/module-template and run the setup task from where you cloned it.
+This template can be used to create Ortus based BoxLang Modules.  To use, just click the `Use this Template` button in the github repository: https://github.com/ortus-boxlang/module-template and run the setup task from where you cloned it.
 
 ```bash
 box task run taskFile=src/build/SetupTemplate
