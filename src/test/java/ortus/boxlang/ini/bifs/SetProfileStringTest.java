@@ -1,6 +1,6 @@
-package ortus.boxlang.moduleslug.bifs;
+package ortus.boxlang.ini.bifs;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import ortus.boxlang.runtime.scopes.IScope;
 import ortus.boxlang.runtime.scopes.Key;
 import ortus.boxlang.runtime.scopes.VariablesScope;
 
-public class ExampleJavaBIFTest {
+public class SetProfileStringTest {
 
 	static BoxRuntime	instance;
 	IBoxContext			context;
@@ -32,11 +32,20 @@ public class ExampleJavaBIFTest {
 		variables	= context.getScopeNearby( VariablesScope.name );
 	}
 
-	@DisplayName( "It can test the ExampleBIF" )
+	@DisplayName( "It can test the bif" )
 	@Test
-	public void testExampleBIF() {
-		instance.executeSource( "result = ExampleJavaBIF()", context );
-		assertEquals( "Hello from an ExampleJavaBIF!", variables.get( result ) );
-	}
+	public void testBif() {
+		// @formatter:off
+		instance.executeSource(
+		    """
+		    SetProfileString( expandPath( "/src/test/resources/test.ini" ), "General", "boxlang", "rocks" );
+			result = GetProfileString( expandPath( "/src/test/resources/test.ini" ), "General", "boxlang" );
+		    """,
+		    context );
+		// @formatter:on
 
+		String data = variables.getAsString( result );
+		assertThat( data ).isNotEmpty();
+		assertThat( data ).isEqualTo( "rocks" );
+	}
 }
